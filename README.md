@@ -62,7 +62,7 @@ This will:
 
 ---
 
-## 🛠️ Manual Step-by-Step
+## Manual Step-by-Step
 
 If you prefer to run steps individually:
 
@@ -87,7 +87,7 @@ python app.py
 
 ---
 
-## 📊 How It Works
+## How It Works
 
 The system analyzes profiles across **6 feature groups**:
 1. **Identity**: Profile picture, bio completeness, username characteristics.
@@ -101,5 +101,5 @@ The training pipeline uses **SMOTE** (Synthetic Minority Over-sampling Technique
 
 ---
 
-## 📜 License
+## License
 This project is open-source and available under the MIT License.
