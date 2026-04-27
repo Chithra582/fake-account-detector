@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShieldAI — Fake Social Media Account Detector</title>
+<meta name="description" content="ML-powered system to detect and report fake social media profiles using behavioral analysis and pattern recognition."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+      <span class="brand-name">Shield<span class="accent">AI</span></span>
+    </div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" data-tab="dashboard" id="tab-dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="analyzer" id="tab-analyzer">Analyzer</button>
+      <button class="tab-btn" data-tab="demo" id="tab-demo">Demo Profiles</button>
+      <button class="tab-btn" data-tab="models" id="tab-models">Models</button>
+      <button class="tab-btn" data-tab="plots" id="tab-plots">Analytics</button>
+    </div>
+    <div class="nav-status"><div class="status-dot"></div><span>Model Active</span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>ML-Powered Detection Engine</div>
+    <h1 class="hero-title">Detect Fake Accounts<br/><span class="gradient-text">With Precision</span></h1>
+    <p class="hero-sub">Advanced machine learning analyzes 36 behavioral, network, and content features to identify fake social media profiles with high accuracy.</p>
+    <div class="hero-stats" id="hero-stats">
+      <div class="stat-pill"><span class="stat-val" id="stat-auc">—</span><span class="stat-lbl">ROC-AUC</span></div>
+      <div class="stat-pill"><span class="stat-val" id="stat-acc">—</span><span class="stat-lbl">Accuracy</span></div>
+      <div class="stat-pill"><span class="stat-val" id="stat-f1">—</span><span class="stat-lbl">F1-Score</span></div>
+      <div class="stat-pill"><span class="stat-val" id="stat-feats">36</span><span class="stat-lbl">Features</span></div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="switchTab('analyzer')">Analyze Profile</button>
+      <button class="btn-ghost" onclick="switchTab('demo')">View Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGES -->
+<main class="main-content">
+
+<!-- DASHBOARD TAB -->
+<div class="tab-page active" id="page-dashboard">
+  <div class="container">
+    <div class="section-header"><h2>System Overview</h2><p>Real-time detection pipeline performance</p></div>
+    <div class="kpi-grid" id="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div><div class="kpi-body"><div class="kpi-val" id="kpi-model">—</div><div class="kpi-lbl">Best Model</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></div><div class="kpi-body"><div class="kpi-val" id="kpi-auc">—</div><div class="kpi-lbl">ROC-AUC Score</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div><div class="kpi-body"><div class="kpi-val" id="kpi-samples">4,000</div><div class="kpi-lbl">Training Profiles</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="kpi-body"><div class="kpi-val" id="kpi-f1">—</div><div class="kpi-lbl">F1-Score</div></div></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header"><h3>Feature Categories</h3></div>
+        <div class="feature-groups" id="feature-groups"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Detection Pipeline</h3></div>
+        <div class="pipeline">
+          <div class="pipe-step"><div class="pipe-icon">📥</div><div class="pipe-text"><strong>Data Ingestion</strong><span>Profile metadata collection</span></div></div>
+          <div class="pipe-arrow">↓</div>
+          <div class="pipe-step"><div class="pipe-icon">⚙️</div><div class="pipe-text"><strong>Feature Extraction</strong><span>36 behavioral signals</span></div></div>
+          <div class="pipe-arrow">↓</div>
+          <div class="pipe-step"><div class="pipe-icon">🔬</div><div class="pipe-text"><strong>ML Classification</strong><span>Ensemble model inference</span></div></div>
+          <div class="pipe-arrow">↓</div>
+          <div class="pipe-step"><div class="pipe-icon">🚨</div><div class="pipe-text"><strong>Risk Scoring</strong><span>Verdict + confidence</span></div></div>
+          <div class="pipe-arrow">↓</div>
+          <div class="pipe-step"><div class="pipe-icon">📊</div><div class="pipe-text"><strong>Report Generation</strong><span>Explainable insights</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card full-width">
+      <div class="card-header"><h3>Model Leaderboard</h3></div>
+      <div class="table-wrap"><table class="leaderboard" id="leaderboard"><thead><tr><th>#</th><th>Model</th><th>ROC-AUC</th><th>Accuracy</th><th>F1-Score</th><th>Precision</th><th>Recall</th><th>CV-AUC</th><th>Status</th></tr></thead><tbody id="leaderboard-body"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANALYZER TAB -->
+<div class="tab-page" id="page-analyzer">
+  <div class="container">
+    <div class="section-header"><h2>Profile Analyzer</h2><p>Input profile features to detect if it's fake or genuine</p></div>
+    <div class="analyzer-layout">
+      <div class="analyzer-form card">
+        <div class="card-header"><h3>Profile Features</h3><span class="form-tip">Fill in the profile metrics below</span></div>
+        <form id="analyzerForm">
+          <div class="form-sections" id="form-sections"></div>
+          <div class="form-actions">
+            <button type="button" class="btn-ghost" onclick="loadRandomProfile()">🎲 Random Profile</button>
+            <button type="button" class="btn-ghost" onclick="clearForm()">🗑 Clear</button>
+            <button type="submit" class="btn-primary" id="analyzeBtn">🔍 Analyze Profile</button>
+          </div>
+        </form>
+      </div>
+      <div class="result-panel" id="result-panel">
+        <div class="result-placeholder">
+          <div class="placeholder-icon">🔍</div>
+          <p>Fill in profile features and click <strong>Analyze Profile</strong> to see results.</p>
+        </div>
+        <div class="result-content" id="result-content" style="display:none">
+          <div class="verdict-card" id="verdict-card">
+            <div class="verdict-icon" id="verdict-icon"></div>
+            <div class="verdict-label" id="verdict-label"></div>
+            <div class="verdict-probability">
+              <div class="prob-bar-wrap"><div class="prob-bar" id="prob-bar"></div></div>
+              <span id="prob-text"></span>
+            </div>
+            <div class="verdict-meta" id="verdict-meta"></div>
+          </div>
+          <div class="group-scores card" id="group-scores-card">
+            <div class="card-header"><h3>Risk Breakdown by Category</h3></div>
+            <div id="group-scores-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEMO TAB -->
+<div class="tab-page" id="page-demo">
+  <div class="container">
+    <div class="section-header"><h2>Demo Profiles</h2><p>Pre-built profiles showcasing different account types</p></div>
+    <div class="demo-grid" id="demo-grid"></div>
+  </div>
+</div>
+
+<!-- MODELS TAB -->
+<div class="tab-page" id="page-models">
+  <div class="container">
+    <div class="section-header"><h2>ML Models</h2><p>All trained classifiers and their performance</p></div>
+    <div class="models-grid" id="models-grid"></div>
+  </div>
+</div>
+
+<!-- PLOTS TAB -->
+<div class="tab-page" id="page-plots">
+  <div class="container">
+    <div class="section-header"><h2>Analytics & Visualizations</h2><p>Detailed model performance and data insights</p></div>
+    <div class="plots-grid">
+      <div class="plot-card card"><div class="card-header"><h3>ROC Curves — All Models</h3></div><img src="/static/plots/roc_curves.png" alt="ROC Curves" class="plot-img" onerror="this.style.display='none';this.nextSibling.style.display='flex'"/><div class="plot-missing">Chart will appear after training</div></div>
+      <div class="plot-card card"><div class="card-header"><h3>Model Comparison</h3></div><img src="/static/plots/model_comparison.png" alt="Model Comparison" class="plot-img" onerror="this.style.display='none';this.nextSibling.style.display='flex'"/><div class="plot-missing">Chart will appear after training</div></div>
+      <div class="plot-card card"><div class="card-header"><h3>Feature Distributions</h3></div><img src="/static/plots/data_distribution.png" alt="Feature Distributions" class="plot-img" onerror="this.style.display='none';this.nextSibling.style.display='flex'"/><div class="plot-missing">Chart will appear after training</div></div>
+      <div class="plot-card card"><div class="card-header"><h3>Correlation Heatmap</h3></div><img src="/static/plots/correlation_heatmap.png" alt="Correlation Heatmap" class="plot-img" onerror="this.style.display='none';this.nextSibling.style.display='flex'"/><div class="plot-missing">Chart will appear after training</div></div>
+      <div class="plot-card card wide"><div class="card-header"><h3>Feature Importance — Best Model</h3></div><img src="/static/plots/feature_importance_random_forest.png" alt="Feature Importance" class="plot-img" onerror="this.src='/static/plots/feature_importance_xgboost.png';"/><div class="plot-missing" style="display:none">Chart will appear after training</div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
